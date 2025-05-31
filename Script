@@ -1,0 +1,54 @@
+# Windows Persistence Checker
+
+Write-Host "==== Windows Persistence Mechanism Check ====" -ForegroundColor Cyan
+
+# 1. Registry Run Keys
+Write-Host "`n[+] Checking Registry Run Keys..."
+
+$runKeys = @(
+    "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run",
+    "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run"
+)
+
+foreach ($key in $runKeys) {
+    if (Test-Path $key) {
+        Get-ItemProperty -Path $key | ForEach-Object {
+            $_.PSObject.Properties | Where-Object {
+                $_.Name -ne "PSPath" -and $_.Name -ne "PSParentPath" -and $_.Name -ne "PSChildName" -and $_.Name -ne "PSDrive" -and $_.Name -ne "PSProvider"
+            } | ForEach-Object {
+                Write-Host "$($key)\$($_.Name) -> $($_.Value)" -ForegroundColor Yellow
+            }
+        }
+    }
+}
+
+# 2. Startup Folder
+Write-Host "`n[+] Checking Startup Folder Shortcuts..."
+$startupPaths = @(
+    "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup",
+    "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Startup"
+)
+
+foreach ($path in $startupPaths) {
+    if (Test-Path $path) {
+        Get-ChildItem -Path $path -Filter *.lnk | ForEach-Object {
+            Write-Host "Startup Shortcut: $($_.FullName)" -ForegroundColor Yellow
+        }
+    }
+}
+
+# 3. Scheduled Tasks
+Write-Host "`n[+] Checking Scheduled Tasks..."
+Get-ScheduledTask | Where-Object { $_.TaskPath -notlike "\Microsoft*" } | ForEach-Object {
+    Write-Host "Task: $($_.TaskName) | Path: $($_.TaskPath)" -ForegroundColor Yellow
+}
+
+# 4. Auto-start Services (non-Microsoft)
+Write-Host "`n[+] Checking Auto-Start Services (non-Microsoft)..."
+Get-WmiObject -Class Win32_Service | Where-Object {
+    $_.StartMode -eq "Auto" -and $_.State -eq "Running" -and $_.PathName -notlike "*Microsoft*"
+} | ForEach-Object {
+    Write-Host "Service: $($_.Name) ($($_.DisplayName)) -> $($_.PathName)" -ForegroundColor Yellow
+}
+
+Write-Host "`n[DONE] Check Complete." -ForegroundColor Green
