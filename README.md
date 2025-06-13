@@ -61,7 +61,7 @@ If you want a structured output:
 `Run-PersistenceCheck -LogPath "C:\Logs\current.txt" -JsonOutputPath "C:\Logs\current.json`
 This will create current.txt as a JSON file that tools or analysts can easily parse.
 
-🔧 Future Ideas
+## 🔧 Future Ideas
 Want to help expand this tool?
 
 Integration with logging pipelines (ELK, Sentinel, etc.)
@@ -70,7 +70,7 @@ Delta alerting (e.g. email or webhook on new persistence)
 
 Scheduled scanning or detection-as-code workflows
 
-👤 About the Author
+## 👤 About the Author
 Blue teamer focused on incident response, detection engineering, and defensive automation.
 Building practical tools for real-world SOC and DFIR operations.
 
