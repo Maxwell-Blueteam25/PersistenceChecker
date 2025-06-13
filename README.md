@@ -47,18 +47,18 @@ This script inspects several areas where persistence is commonly established —
 When the system is in a known-good state:
 
 
-.\Run-PersistenceCheck.ps1
-Run-PersistenceCheck -LogPath "C:\Logs\baseline.txt"
+`.\Run-PersistenceCheck.ps1
+Run-PersistenceCheck -LogPath "C:\Logs\baseline.txt"`
 
 🔹 Step 2: Compare Later Against the Baseline
 On the same (or similar) system:
 
-Run-PersistenceCheck -LogPath "C:\Logs\current.txt" -BaselinePath "C:\Logs\baseline.txt"
+`Run-PersistenceCheck -LogPath "C:\Logs\current.txt" -BaselinePath "C:\Logs\baseline.txt"`
 
 🔹 (Optional) Export to JSON for SIEM/Automation
 If you want a structured output:
 
-Run-PersistenceCheck -LogPath "C:\Logs\current.txt" -Json
+`Run-PersistenceCheck -LogPath "C:\Logs\current.txt" -JsonOutputPath "C:\Logs\current.json`
 This will create current.txt as a JSON file that tools or analysts can easily parse.
 
 🔧 Future Ideas
