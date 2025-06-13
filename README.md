@@ -48,6 +48,8 @@ Run-PersistenceCheck -LogPath "C:\Logs\baseline.txt"
 
 Run-PersistenceCheck -LogPath "C:\Logs\current.txt" -BaselinePath "C:\Logs\baseline.txt"
 
+---
+
 Blue teamer focused on incident response, detection engineering, and defensive automation.
 Building practical tools for real-world SOC and DFIR operations.
 
