@@ -47,8 +47,8 @@ This script inspects several areas where persistence is commonly established —
 When the system is in a known-good state:
 
 
-`.\Run-PersistenceCheck.ps1
-Run-PersistenceCheck -LogPath "C:\Logs\baseline.txt"`
+`.\Run-PersistenceCheck.ps1`
+`Run-PersistenceCheck -LogPath "C:\Logs\baseline.txt"`
 
 🔹 Step 2: Compare Later Against the Baseline
 On the same (or similar) system:
